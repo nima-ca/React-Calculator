@@ -21,6 +21,8 @@ const reducer = (state, { type, payload }) => {
       currentOperand: `${state.currentOperand || ""}${payload.digit}`,
     };
   }
+
+  if (type === ACTIONS.CLEAR) return {};
 };
 
 function App() {
@@ -37,7 +39,12 @@ function App() {
         </div>
         <div className={styles.current}>{currentOperand}</div>
       </div>
-      <button className={styles["span-two"]}>AC</button>
+      <button
+        className={styles["span-two"]}
+        onClick={() => dispatch({ type: ACTIONS.CLEAR })}
+      >
+        AC
+      </button>
       <button>DEL</button>
       <OperationButton operation="÷" dispatch={dispatch} />
       <DigitButton digit="1" dispatch={dispatch} />
