@@ -4,8 +4,8 @@ function App() {
   return (
     <div className={styles["calculator-grid"]}>
       <div className={styles.output}>
-        <div className={styles.previous}>1324 *</div>
-        <div className={styles.current}>1235</div>
+        <div className={styles.previous}></div>
+        <div className={styles.current}></div>
       </div>
       <button className={styles["span-two"]}>AC</button>
       <button>DEL</button>
