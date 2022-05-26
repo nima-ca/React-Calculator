@@ -22,8 +22,60 @@ const reducer = (state, { type, payload }) => {
     };
   }
 
+  if (type === ACTIONS.CHOOSE_OPERATION) {
+    if (state.currentOperand == null && state.previousOperand == null)
+      return state;
+
+    if (state.currentOperand == null) {
+      return {
+        ...state,
+        operation: payload.operation,
+      };
+    }
+
+    if (state.previousOperand == null) {
+      return {
+        ...state,
+        operation: payload.operation,
+        previousOperand: state.currentOperand,
+        currentOperand: null,
+      };
+    }
+
+    return {
+      ...state,
+      operation: payload.operation,
+      previousOperand: evaluate(state),
+      currentOperand: null,
+    };
+  }
+
   if (type === ACTIONS.CLEAR) return {};
 };
+
+function evaluate({ previousOperand, currentOperand, operation }) {
+  const prev = parseFloat(previousOperand);
+  const curr = parseFloat(currentOperand);
+  if (isNaN(prev) || isNaN(curr)) return "";
+  let result;
+  switch (operation) {
+    case "+":
+      result = prev + curr;
+      break;
+    case "-":
+      result = prev - curr;
+      break;
+    case "*":
+      result = prev * curr;
+      break;
+    case "÷":
+      result = prev / curr;
+      break;
+    default:
+      result = "";
+  }
+  return result.toString();
+}
 
 function App() {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
