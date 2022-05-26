@@ -1,4 +1,4 @@
-import { ACTIONS } from "../App";
+import { ACTIONS } from "../Hooks/useCalculator";
 
 const DigitButton = ({ dispatch, digit }) => {
   return (
