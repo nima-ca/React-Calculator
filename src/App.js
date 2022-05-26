@@ -3,6 +3,17 @@ import DigitButton from "./Components/DigitButton";
 import OperationButton from "./Components/OperationButton";
 import useCalculator, { ACTIONS } from "./Hooks/useCalculator";
 
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 0,
+});
+
+const formatOperand = (operand) => {
+  if (operand == null) return;
+  const [integer, decimal] = operand.split(".");
+  if (decimal == null) return INTEGER_FORMATTER.format(integer);
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`;
+};
+
 function App() {
   const { currentOperand, previousOperand, operation, dispatch } =
     useCalculator();
@@ -11,9 +22,9 @@ function App() {
     <div className={styles["calculator-grid"]}>
       <div className={styles.output}>
         <div className={styles.previous}>
-          {previousOperand} {operation}
+          {formatOperand(previousOperand)} {operation}
         </div>
-        <div className={styles.current}>{currentOperand}</div>
+        <div className={styles.current}>{formatOperand(currentOperand)}</div>
       </div>
       <button
         className={styles["span-two"]}
